@@ -1,0 +1,26 @@
+% Table: Cross-Task Performance Comparison
+\begin{table}[ht]
+\centering
+\caption{Task-model alignment effects: monotonicity scores ($M$) comparing aligned vs. cross-task performance. $\Delta M$ shows the performance drop when models are applied to non-aligned tasks.}
+\label{tab:cross_task_comparison}
+\small
+\begin{tabular}{lcccr}
+\toprule
+\textbf{Model Type} & \textbf{Aligned} & \textbf{Cross-Task} & \textbf{$\Delta M$} & \textbf{Effect} \\
+\midrule
+\multicolumn{5}{l}{\textit{NWP Models}} \\
+GPT-3.5 & 0.89 & 0.76 & $-0.13$ & Moderate \\
+GPT-4 & 0.64 & 0.68 & $+0.04$ & None \\
+LLaMA-3-8B & 0.81 & 0.74 & $-0.07$ & Small \\
+Mistral-7B & 0.58 & 0.62 & $+0.04$ & None \\
+\midrule
+\multicolumn{5}{l}{\textit{MLM Models}} \\
+RoBERTa-large & 0.92 & 0.34 & $-0.58$ & Large \\
+BERT-base & 0.85 & 0.41 & $-0.44$ & Large \\
+ELECTRA-large & 0.73 & 0.38 & $-0.35$ & Large \\
+\midrule
+\multicolumn{5}{l}{\footnotesize{Aligned: Production for NWP, Gap-filling for MLM}} \\
+\multicolumn{5}{l}{\footnotesize{Cross-Task: Gap-filling for NWP, Production for MLM}} \\
+\bottomrule
+\end{tabular}
+\end{table}

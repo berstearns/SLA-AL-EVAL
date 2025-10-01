@@ -1,0 +1,36 @@
+% Table: Error Type Distribution for Production Tasks
+\begin{table*}[ht]
+\centering
+\caption{Error type distributions (percentage of total errors) and Jensen-Shannon divergence ($D_{JS}$) comparing simulated and authentic learner responses across CEFR levels. Lower $D_{JS}$ indicates better alignment with authentic error patterns.}
+\label{tab:error_types_production}
+\small
+\begin{tabular}{llccccccc}
+\toprule
+\textbf{CEFR} & \textbf{Error Type} & \textbf{Auth.} & \textbf{GPT-3.5} & \textbf{GPT-4} & \textbf{LLaMA-3} & \textbf{Mistral} \\
+\midrule
+\multirow{5}{*}{A1-A2}
+& Verb tense & 28.4 & 24.7 & 18.3 & 26.1 & 23.8 \\
+& Subject-verb agr. & 19.2 & 21.3 & 14.6 & 19.8 & 18.4 \\
+& Articles & 22.6 & 19.4 & 16.2 & 20.3 & 22.1 \\
+& L1 transfer & 18.3 & 6.2 & 4.1 & 7.8 & 9.2 \\
+& Other & 11.5 & 28.4 & 46.8 & 26.0 & 26.5 \\
+& \textit{$D_{JS}$} & -- & 0.23 & 0.38 & 0.21 & 0.24 \\
+\midrule
+\multirow{5}{*}{B1-B2}
+& Preposition & 24.8 & 26.2 & 22.4 & 25.8 & 24.3 \\
+& Word form & 21.3 & 23.7 & 19.8 & 22.1 & 20.6 \\
+& Collocation & 15.4 & 18.9 & 21.3 & 16.7 & 14.2 \\
+& Verb tense & 16.2 & 14.8 & 12.3 & 15.4 & 17.8 \\
+& Other & 22.3 & 16.4 & 24.2 & 19.9 & 23.1 \\
+& \textit{$D_{JS}$} & -- & \textbf{0.15} & 0.19 & 0.17 & 0.21 \\
+\midrule
+\multirow{5}{*}{C1-C2}
+& Collocation & 32.4 & 15.8 & 12.3 & 18.4 & 14.6 \\
+& Register & 21.7 & 8.4 & 6.1 & 11.2 & 9.8 \\
+& Subtle grammar & 18.3 & 22.6 & 28.4 & 19.7 & 21.4 \\
+& Preposition & 14.2 & 18.7 & 16.2 & 15.8 & 17.3 \\
+& Other & 13.4 & 34.5 & 37.0 & 34.9 & 36.9 \\
+& \textit{$D_{JS}$} & -- & 0.31 & 0.42 & 0.28 & 0.35 \\
+\bottomrule
+\end{tabular}
+\end{table*}

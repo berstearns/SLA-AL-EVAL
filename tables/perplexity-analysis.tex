@@ -1,0 +1,31 @@
+% Table: Perplexity Analysis Across Models and Tasks
+\begin{table*}[ht]
+\centering
+\caption{Perplexity scores for simulated responses across CEFR levels. For NWP models: autoregressive perplexity; for MLM models: pseudo-perplexity. Lower perplexity indicates more fluent/native-like text.}
+\label{tab:perplexity_analysis}
+\small
+\begin{tabular}{llcccccc}
+\toprule
+\textbf{Task} & \textbf{Model} & \textbf{A1} & \textbf{A2} & \textbf{B1} & \textbf{B2} & \textbf{C1} & \textbf{Corr.} \\
+\midrule
+\multicolumn{8}{l}{\textit{Production Tasks}} \\
+& GPT-3.5 & 124.3 & 98.7 & 76.2 & 54.8 & 38.4 & $-0.92^{***}$ \\
+& GPT-4 & 78.4 & 62.1 & 48.3 & 36.7 & 28.9 & $-0.88^{***}$ \\
+& LLaMA-3-8B & 138.6 & 105.4 & 81.7 & 58.3 & 42.1 & $-0.91^{***}$ \\
+& Mistral-7B & 142.1 & 112.8 & 89.4 & 71.2 & 56.8 & $-0.84^{***}$ \\
+\cmidrule{2-8}
+& \textit{Authentic} & 156.8 & 118.3 & 88.4 & 62.7 & 44.2 & $-0.94^{***}$ \\
+\midrule
+\multicolumn{8}{l}{\textit{Gap-Filling Tasks}} \\
+& RoBERTa-large & -- & 182.4 & 124.6 & 78.3 & 48.7 & $-0.89^{***}$ \\
+& BERT-base & -- & 196.7 & 138.2 & 86.4 & 54.3 & $-0.86^{***}$ \\
+& ELECTRA-large & -- & 164.3 & 108.7 & 69.2 & 42.8 & $-0.91^{***}$ \\
+\cmidrule{2-8}
+& GPT-3.5 & -- & 145.8 & 98.4 & 64.7 & 41.2 & $-0.87^{***}$ \\
+& LLaMA-3-8B & -- & 158.3 & 106.9 & 71.3 & 46.8 & $-0.85^{***}$ \\
+\cmidrule{2-8}
+& \textit{Authentic} & -- & 192.6 & 132.8 & 84.2 & 52.4 & $-0.93^{***}$ \\
+\bottomrule
+\multicolumn{8}{l}{\footnotesize{Corr. = Spearman correlation between perplexity and CEFR level; $^{***}p < 0.001$}} \\
+\end{tabular}
+\end{table*}

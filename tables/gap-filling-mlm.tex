@@ -1,0 +1,20 @@
+% Table: Gap-Filling Performance - MLM Models
+\begin{table}[ht]
+\centering
+\caption{Gap-filling performance for MLM-specialized models across simulated CEFR levels (Cambridge corpus). Accuracy represents proportion of correctly filled gaps.}
+\label{tab:gap_filling_mlm}
+\small
+\begin{tabular}{lccccccc}
+\toprule
+\textbf{Model} & \textbf{$M$} & \textbf{A2} & \textbf{B1} & \textbf{B2} & \textbf{C1} & \textbf{$D_{JS}$} \\
+\midrule
+\multicolumn{7}{l}{\textit{MLM-Specialized Models}} \\
+RoBERTa-large & \textbf{0.92} & 0.42 & 0.58 & 0.73 & 0.91 & \textbf{0.18} \\
+BERT-base & 0.85 & 0.47 & 0.61 & 0.69 & 0.86 & 0.22 \\
+ELECTRA-large & 0.73 & 0.67 & 0.74 & 0.82 & 0.93 & 0.26 \\
+\midrule
+\multicolumn{7}{l}{\textit{Baseline}} \\
+Authentic & -- & 0.38 & 0.54 & 0.71 & 0.89 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

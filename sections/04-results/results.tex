@@ -1,10 +1,14 @@
 \section{Results}
 
+We present results organized by task type, followed by cross-task generalization analysis, perplexity-based evaluation, and human evaluation. All experiments were conducted on temperature=0 for deterministic outputs, with results averaged over three runs where applicable.
+
 \subsection{Production Task Performance}
 
 \subsubsection{Proficiency Simulation Patterns}
 
-Figure~\ref{fig:production_monotonicity} shows the accuracy patterns of NWP-specialized models when simulating different proficiency levels on production tasks from EFCAMDAT. All models demonstrate increasing linguistic complexity with higher simulated proficiency levels, though with varying degrees of monotonicity.
+Table~\ref{tab:production_monotonicity} presents monotonicity scores and proficiency differentiation metrics for NWP-specialized models on production tasks from EFCAMDAT. All models demonstrate increasing linguistic complexity with higher simulated proficiency levels, though with varying degrees of monotonicity.
+
+\input{tables/production-monotonicity}
 
 \textbf{GPT-3.5} achieved the highest monotonicity score ($M = 0.89$), with nearly linear increases in lexical diversity (MTLD) and syntactic complexity across simulated levels A1-C2. Error rates decreased from 47\% at simulated A1 to 8\% at simulated C2.
 
@@ -16,7 +20,9 @@ Figure~\ref{fig:production_monotonicity} shows the accuracy patterns of NWP-spec
 
 \subsubsection{Error Analysis}
 
-Table~\ref{tab:error_types_production} compares error type distributions between simulated and authentic learner responses at each proficiency level.
+Table~\ref{tab:error_types_production} compares error type distributions between simulated and authentic learner responses at each proficiency level. Error patterns reveal both strengths and limitations in simulation fidelity across CEFR levels.
+
+\input{tables/error-types-production}
 
 \textbf{A1-A2 levels:} GPT-3.5 produced reasonable distributions of basic errors (verb tense, subject-verb agreement, articles), though authentic learners showed higher rates of L1 transfer errors that models rarely generated. Jensen-Shannon divergence: $D_{JS} = 0.23$ for GPT-3.5.
 
@@ -26,13 +32,9 @@ Table~\ref{tab:error_types_production} compares error type distributions between
 
 \subsubsection{Linguistic Complexity Alignment}
 
-Figure~\ref{fig:complexity_production} plots lexical and syntactic complexity measures for simulated vs. authentic responses at each CEFR level.
+Table~\ref{tab:linguistic_complexity} presents lexical and syntactic complexity measures for simulated vs. authentic responses across CEFR levels. Simulated responses showed strong correlations with authentic patterns across multiple dimensions, with lexical diversity (MTLD: $\rho = 0.82$, $p < 0.001$) and subordination ratio ($\rho = 0.88$, $p < 0.001$) showing particularly robust alignment.
 
-Simulated responses showed strong correlation with authentic patterns for:
-\begin{itemize}
-    \item Lexical diversity (MTLD): $\rho = 0.82$, $p < 0.001$
-    \item Mean T-unit length: $\rho = 0.76$, $p < 0.001$
-\end{itemize}
+\input{tables/linguistic-complexity}
 
 However, simulated responses were systematically more coherent and better organized, with higher scores on discourse coherence metrics (Coh-Metrix), suggesting models produce "idealized" learner language rather than capturing authentic performance variability.
 
@@ -40,7 +42,9 @@ However, simulated responses were systematically more coherent and better organi
 
 \subsubsection{MLM-Specialized Models}
 
-Table~\ref{tab:gap_filling_mlm} presents accuracy results for MLM-specialized models on gap-filling exercises.
+Table~\ref{tab:gap_filling_mlm} presents accuracy results for MLM-specialized models on gap-filling exercises from the Cambridge corpus. MLM models demonstrate strong proficiency differentiation on their aligned task type.
+
+\input{tables/gap-filling-mlm}
 
 \textbf{RoBERTa-large} achieved the best proficiency differentiation, with accuracy increasing monotonically from 42\% (simulated A2) to 91\% (simulated C1), yielding $M = 0.92$. Error patterns closely matched authentic learner responses ($D_{JS} = 0.18$).
 
@@ -48,9 +52,17 @@ Table~\ref{tab:gap_filling_mlm} presents accuracy results for MLM-specialized mo
 
 \textbf{ELECTRA-large} produced very high accuracy even at simulated A2 (67\%), suggesting difficulty modeling lower proficiency levels, similar to GPT-4's hyper-accuracy in production.
 
+\subsubsection{MLM-Specific Accuracy Analysis}
+
+Table~\ref{tab:mlm_accuracy_analysis} provides extended accuracy analysis leveraging MLM models' native probability distributions. RoBERTa-large achieved the best calibration (ECE = 0.05 for B2-C1) and lowest KL divergence from authentic learner distributions, indicating superior alignment with authentic response patterns.
+
+\input{tables/mlm-accuracy-analysis}
+
 \subsubsection{NWP-Specialized Models on Gap-Filling}
 
-NWP models adapted for gap-filling (Table~\ref{tab:gap_filling_nwp}) showed mixed results:
+NWP models adapted for gap-filling (Table~\ref{tab:gap_filling_nwp}) showed mixed results, demonstrating cross-task generalization capabilities with some performance degradation.
+
+\input{tables/gap-filling-nwp}
 
 \textbf{GPT-3.5} achieved reasonable proficiency differentiation ($M = 0.76$), though accuracy was generally higher than MLM models at lower simulated levels, indicating difficulty generating appropriately incorrect responses.
 
@@ -59,6 +71,10 @@ NWP models adapted for gap-filling (Table~\ref{tab:gap_filling_nwp}) showed mixe
 Notably, NWP models required explicit prompting to "make characteristic errors" to avoid simply producing correct answers, suggesting their generation capabilities can override proficiency simulation instructions.
 
 \subsection{Cross-Task Generalization}
+
+Table~\ref{tab:cross_task_comparison} summarizes the task-model alignment effects, comparing performance on aligned vs. non-aligned tasks. The results reveal asymmetric cross-task generalization patterns.
+
+\input{tables/cross-task-comparison}
 
 \subsubsection{MLM Models on Production Tasks}
 
@@ -92,9 +108,19 @@ Removing chain-of-thought explanations decreased monotonicity scores by 0.12-0.2
 
 Adding explicit error examples in prompts improved lower-level simulation but reduced upper-level performance, suggesting a trade-off between capturing beginner errors and advanced proficiency.
 
+\subsection{Perplexity-Based Evaluation}
+
+Table~\ref{tab:perplexity_analysis} presents perplexity scores across models, tasks, and proficiency levels. Perplexity patterns show strong negative correlations with CEFR level for all models, indicating that higher proficiency simulations produce more fluent text as measured by language model likelihood.
+
+\input{tables/perplexity-analysis}
+
+For production tasks, GPT-3.5 perplexity patterns ($\rho = -0.92$) most closely matched authentic learner patterns, while maintaining realistic absolute values. GPT-4 showed consistently lower perplexity across all levels, consistent with hyper-accuracy findings. For gap-filling tasks, MLM models exhibited appropriate perplexity progressions, though with higher absolute values reflecting the pseudo-perplexity calculation method.
+
 \subsection{Human Evaluation Results}
 
-Table~\ref{tab:human_eval} summarizes expert ratings:
+Table~\ref{tab:human_eval} summarizes expert ratings across multiple dimensions of simulation authenticity.
+
+\input{tables/human-evaluation}
 
 \textbf{Authenticity detection:}
 \begin{itemize}

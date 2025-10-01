@@ -1,0 +1,20 @@
+% Table: Production Task Monotonicity Scores by Model
+\begin{table}[ht]
+\centering
+\caption{Monotonicity scores ($M$) and proficiency differentiation metrics for NWP models on production tasks (EFCAMDAT corpus). Higher scores indicate better proficiency-level simulation.}
+\label{tab:production_monotonicity}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Model} & \textbf{$M$ Score} & \textbf{$\rho$} & \textbf{A1 Err\%} & \textbf{C2 Err\%} & \textbf{MTLD Range} & \textbf{Status} \\
+\midrule
+GPT-3.5 & \textbf{0.89} & 0.94 & 47 & 8 & 45.2--78.9 & Monotonic \\
+LLaMA-3-8B & 0.81 & 0.89 & 41 & 12 & 42.8--74.3 & Monotonic \\
+Mistral-7B & 0.58 & 0.73 & 38 & 15 & 44.1--69.2 & Non-monotonic \\
+GPT-4 & 0.64 & 0.78 & 22 & 5 & 52.3--81.4 & Hyper-accurate \\
+\midrule
+\multicolumn{7}{l}{\textit{Baseline: Authentic learners}} \\
+Human & -- & -- & 52 & 7 & 41.5--76.8 & Reference \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,43 @@
+% Table: Linguistic Complexity Measures
+\begin{table*}[ht]
+\centering
+\caption{Linguistic complexity measures for production tasks comparing simulated and authentic responses. Correlation values show alignment between simulated and authentic complexity progressions across CEFR levels.}
+\label{tab:linguistic_complexity}
+\small
+\begin{tabular}{llcccccc}
+\toprule
+& & \multicolumn{3}{c}{\textbf{Sample Values}} & & \\
+\cmidrule(lr){3-5}
+\textbf{Measure} & \textbf{Model} & \textbf{A1} & \textbf{B1} & \textbf{C1} & \textbf{$\rho$} & \textbf{$p$-value} \\
+\midrule
+\multicolumn{7}{l}{\textit{Lexical Diversity (MTLD)}} \\
+& GPT-3.5 & 45.2 & 62.8 & 78.9 & 0.82 & $< 0.001$ \\
+& LLaMA-3-8B & 42.8 & 59.3 & 74.3 & 0.79 & $< 0.001$ \\
+& Mistral-7B & 44.1 & 56.7 & 69.2 & 0.71 & $< 0.001$ \\
+& GPT-4 & 52.3 & 67.4 & 81.4 & 0.68 & $< 0.001$ \\
+& \textit{Authentic} & 41.5 & 58.6 & 76.8 & -- & -- \\
+\midrule
+\multicolumn{7}{l}{\textit{Mean T-Unit Length}} \\
+& GPT-3.5 & 8.3 & 11.7 & 14.8 & 0.76 & $< 0.001$ \\
+& LLaMA-3-8B & 7.9 & 11.2 & 14.1 & 0.74 & $< 0.001$ \\
+& Mistral-7B & 8.1 & 10.8 & 13.4 & 0.69 & $< 0.001$ \\
+& GPT-4 & 9.4 & 12.6 & 15.7 & 0.65 & $< 0.001$ \\
+& \textit{Authentic} & 7.6 & 11.3 & 15.2 & -- & -- \\
+\midrule
+\multicolumn{7}{l}{\textit{Subordination Ratio}} \\
+& GPT-3.5 & 0.12 & 0.28 & 0.46 & 0.88 & $< 0.001$ \\
+& LLaMA-3-8B & 0.14 & 0.31 & 0.48 & 0.86 & $< 0.001$ \\
+& Mistral-7B & 0.11 & 0.26 & 0.42 & 0.81 & $< 0.001$ \\
+& GPT-4 & 0.18 & 0.35 & 0.52 & 0.79 & $< 0.001$ \\
+& \textit{Authentic} & 0.13 & 0.29 & 0.47 & -- & -- \\
+\midrule
+\multicolumn{7}{l}{\textit{Coherence (Coh-Metrix)}} \\
+& GPT-3.5 & 0.68 & 0.74 & 0.82 & 0.61 & 0.003 \\
+& LLaMA-3-8B & 0.71 & 0.77 & 0.84 & 0.58 & 0.005 \\
+& Mistral-7B & 0.65 & 0.72 & 0.79 & 0.63 & 0.002 \\
+& GPT-4 & 0.76 & 0.81 & 0.88 & 0.54 & 0.008 \\
+& \textit{Authentic} & 0.58 & 0.64 & 0.73 & -- & -- \\
+\bottomrule
+\multicolumn{7}{l}{\footnotesize{$\rho$ = Spearman correlation between simulated and authentic measures across all CEFR levels}} \\
+\end{tabular}
+\end{table*}
