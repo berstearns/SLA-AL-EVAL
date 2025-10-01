@@ -1,0 +1,123 @@
+\section{Discussion}
+
+\subsection{Task-Model Alignment: Limited but Measurable}
+
+Our findings reveal that while task-specialized models (NWP for production, MLM for gap-filling) show advantages on aligned tasks, the effect is more modest than hypothesized. MLM models achieved stronger error pattern alignment on gap-filling (mean $D_{JS} = 0.18$ vs. 0.29 for NWP models), but NWP models demonstrated surprising adaptability to the constrained gap-filling context.
+
+This asymmetry suggests that task structure may matter more than training objective: gap-filling's constrained response space naturally guides appropriate outputs, whereas production's open-ended nature offers less constraint, making it harder for MLM models to generate coherent extended text.
+
+The stronger cross-task flexibility of NWP models aligns with recent findings that autoregressive models develop more general-purpose capabilities \cite{bubeck2023sparks}, while MLM models remain more specialized to their training paradigm.
+
+\subsection{The Hyper-Accuracy Problem}
+
+Consistent with \citet{benedetto2024using}'s observations about GPT-4, we found that larger, more capable models struggled to simulate lower proficiency levels. This "hyper-accuracy curse" manifests as:
+
+\begin{itemize}
+    \item Inappropriately low error rates at simulated A1-A2 levels
+    \item Error types that are too sophisticated (e.g., subtle collocation issues at A2)
+    \item Excessive coherence and organization across all levels
+\end{itemize}
+
+This phenomenon poses challenges for virtual pretesting and synthetic data generation, as lower proficiency levels are precisely where authentic data is most scarce. Mid-size models (GPT-3.5, LLaMA-3-8B) achieved better proficiency range coverage, suggesting an important trade-off between model capability and simulation fidelity.
+
+\subsection{Authenticity vs. Stereotypicality}
+
+Human evaluators noted that simulated responses felt "stereotypical" rather than authentically variable. This observation highlights a key limitation: LLMs likely learn averaged representations of proficiency levels from training data, missing the individual variation that characterizes real learners.
+
+Authentic learners at the same CEFR level exhibit substantial heterogeneity due to:
+\begin{itemize}
+    \item L1 background (transfer errors)
+    \item Learning context (formal instruction vs. naturalistic)
+    \item Individual differences (working memory, aptitude)
+    \item Task effects (topic familiarity, test anxiety)
+\end{itemize}
+
+Our models capture general proficiency patterns but lack this individual-level variability, producing what \citet{xia2024second} call "stylized averages." Future work could explore conditioning on demographic and contextual variables to increase heterogeneity.
+
+\subsection{Error Pattern Analysis}
+
+The relatively strong alignment of error patterns at B1-B2 levels ($D_{JS} = 0.15$) compared to endpoints (A1-A2: 0.23, C1-C2: 0.31) reveals an interesting pattern: models best simulate the proficiency levels most represented in their training data.
+
+Most learner corpora and online texts concentrate around intermediate levels, providing models with richer examples of characteristic B-level errors. This suggests:
+\begin{itemize}
+    \item Better simulation for well-represented proficiency levels
+    \item Potential degradation at endpoints where training examples are sparse
+    \item Importance of balanced training data for future artificial learner models
+\end{itemize}
+
+\subsection{Practical Applications and Limitations}
+
+\subsubsection{Virtual Pretesting}
+
+Our results suggest moderate promise for virtual pretesting applications:
+
+\textbf{Strengths:}
+\begin{itemize}
+    \item Reasonable proficiency differentiation for gap-filling items
+    \item Correlation with authentic response patterns (particularly B1-B2)
+    \item Cost-effective preliminary screening of items
+\end{itemize}
+
+\textbf{Limitations:}
+\begin{itemize}
+    \item Cannot replace human pretesting for high-stakes assessment
+    \item Systematic bias toward more accurate responses
+    \item Missing L1-specific error patterns
+\end{itemize}
+
+A hybrid approach, using simulations for initial screening followed by targeted human pretesting, may optimize resource allocation.
+
+\subsubsection{Synthetic Data Generation}
+
+For augmenting training data:
+
+\textbf{Viable use cases:}
+\begin{itemize}
+    \item Generating additional intermediate-level (B1-B2) examples
+    \item Creating controlled contrast sets for error detection systems
+    \item Producing negative examples for grammatical error correction
+\end{itemize}
+
+\textbf{Problematic use cases:}
+\begin{itemize}
+    \item Training CEFR classifiers without validation on authentic data
+    \item Modeling A1 or C2 learners (poor simulation quality)
+    \item Capturing L1-specific developmental patterns
+\end{itemize}
+
+\subsection{Generalization Across Prompts and Models}
+
+Like \citet{benedetto2024using}, we observed that prompts engineered for one model often underperform on others. GPT-3.5's optimal prompt produced significantly worse results with GPT-4 (monotonicity score drop: 0.25), and prompts tuned for GPT models required substantial adaptation for open-source alternatives.
+
+This prompt brittleness limits practical deployment, as:
+\begin{itemize}
+    \item Model versions evolve rapidly (GPT-3.5-turbo updates quarterly)
+    \item Optimal prompts require extensive engineering per model
+    \item No universal simulation prompt exists across architectures
+\end{itemize}
+
+Future research should investigate more robust prompting strategies or fine-tuning approaches that reduce model-specific optimization needs.
+
+\subsection{Implications for SLA Research}
+
+Our findings contribute to SLA in several ways:
+
+\textbf{Methodological:} LLM-based learner simulation offers a new tool for studying proficiency development, though with known limitations. Researchers should treat simulations as approximate models, not ground truth.
+
+\textbf{Theoretical:} The patterns of what LLMs simulate well (intermediate levels, frequent error types) vs. poorly (endpoints, subtle advanced errors) may reflect the statistical prominence of these phenomena in naturalistic language data, potentially informing theories about what aspects of acquisition are most salient.
+
+\textbf{Practical:} While not replacing authentic learner data, simulations can augment it, particularly for underrepresented levels and languages where collecting sufficient authentic data is costly.
+
+\subsection{Limitations}
+
+Several limitations constrain our conclusions:
+
+\textbf{Language scope:} We focused exclusively on English L2. Findings may not generalize to other target languages or less-resourced language pairs.
+
+\textbf{Task coverage:} Production and gap-filling represent only two task types. Speaking, listening, and interactive tasks remain unexplored.
+
+\textbf{Proficiency scale:} CEFR provides coarse-grained levels. Finer-grained simulation (e.g., A1- vs. A1+) may reveal different patterns.
+
+\textbf{Training data opacity:} Commercial models' training data is unknown, potentially including learner corpora that would inflate performance estimates.
+
+\textbf{Evaluation challenges:} Assessing simulation fidelity is inherently difficult without comprehensive learner response datasets, which remain scarce.

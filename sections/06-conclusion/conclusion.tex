@@ -1,0 +1,111 @@
+\section{Conclusion and Future Work}
+
+This paper systematically investigated whether generative LLMs can simulate second language learners' responses across production and fill-in-the-gap tasks, and whether task-specialized models (NWP vs. MLM) demonstrate superior performance on aligned task types.
+
+\subsection{Key Findings}
+
+We demonstrated that:
+
+\begin{enumerate}
+    \item \textbf{Proficiency simulation is feasible}: LLMs can generate proficiency-specific responses showing appropriate patterns in linguistic complexity, error frequency, and lexical/syntactic features. GPT-3.5 and LLaMA-3-8B provided the best balance of capability and proficiency range coverage.
+
+    \item \textbf{Task-model alignment matters, but modestly}: MLM-specialized models showed stronger error pattern alignment on gap-filling tasks ($D_{JS}$ improvement of 0.11), but NWP models demonstrated surprising cross-task flexibility. The constrained nature of gap-filling appears to guide appropriate responses regardless of training objective.
+
+    \item \textbf{Model size creates trade-offs}: Larger models (GPT-4, ELECTRA-large) suffered from hyper-accuracy, struggling to simulate lower proficiency levels. Mid-size models achieved better proficiency range differentiation.
+
+    \item \textbf{Simulation quality varies by proficiency}: Models best simulate intermediate levels (B1-B2) where training data is abundant, but struggle with endpoints (A1, C2) and capturing individual learner variability.
+
+    \item \textbf{Generalization remains challenging}: Prompts require model-specific engineering and do not transfer well across architectures, limiting practical deployment.
+\end{enumerate}
+
+\subsection{Contributions}
+
+This work makes several contributions to artificial learner research:
+
+\begin{itemize}
+    \item First systematic comparison of LLM simulation across production vs. gap-filling task types
+    \item Evaluation framework for assessing proficiency-specific simulation fidelity
+    \item Empirical evidence on the impact of training objectives (NWP vs. MLM) on learner simulation capabilities
+    \item Analysis of error patterns and linguistic complexity in simulated vs. authentic learner responses
+    \item Practical guidance on model selection and prompt engineering for educational applications
+\end{itemize}
+
+\subsection{Future Directions}
+
+Several promising research directions emerge:
+
+\subsubsection{Enhanced Simulation Approaches}
+
+\textbf{Demographic conditioning:} Extending prompts to specify L1 background, learning context, and individual differences could increase simulation heterogeneity and authenticity.
+
+\textbf{Fine-tuning on learner corpora:} Rather than relying solely on prompting, fine-tuning models on authentic learner data may yield more reliable proficiency-specific behavior, though at the cost of increased resource requirements.
+
+\textbf{Retrieval-augmented simulation:} As suggested by \citet{benedetto2024using}, incorporating retrieval over topic-specific learner examples could ground simulations in more appropriate linguistic patterns.
+
+\textbf{Multi-agent simulation:} Generating diverse responses from multiple simulated learners at each level, rather than single "average" responses, could better capture authentic variability.
+
+\subsubsection{Expanded Task Coverage}
+
+Future work should investigate:
+\begin{itemize}
+    \item Speaking simulation (pronunciation errors, fluency, prosody)
+    \item Listening comprehension (at what level would learners understand specific audio?)
+    \item Interactive tasks (turn-taking, repair strategies)
+    \item Writing process simulation (planning, revision, keystroke dynamics)
+\end{itemize}
+
+\subsubsection{Cross-Linguistic Extension}
+
+Our English-focused study should be replicated for:
+\begin{itemize}
+    \item Other widely-taught languages (Spanish, French, Mandarin)
+    \item Low-resource language pairs where synthetic data is most needed
+    \item Typologically diverse languages to test universality of findings
+\end{itemize}
+
+\subsubsection{Improved Evaluation Methodologies}
+
+Better assessment of simulation fidelity requires:
+\begin{itemize}
+    \item Large-scale item response data pairing questions with learner responses across proficiency levels
+    \item Longitudinal learner data to validate developmental trajectories
+    \item Standardized benchmarks for artificial learner evaluation
+    \item More sophisticated metrics for capturing authentic variability vs. stereotypicality
+\end{itemize}
+
+\subsubsection{Bias and Fairness Investigation}
+
+Critical examination is needed of:
+\begin{itemize}
+    \item Whether simulations systematically over- or under-represent certain L1 backgrounds
+    \item How training data biases affect simulated error patterns
+    \item Fairness implications of using synthetic data for assessment system training
+    \item Ethical considerations of deploying simulations in educational contexts
+\end{itemize}
+
+\subsubsection{Automated Prompt Optimization}
+
+Given prompt brittleness across models, automatic prompt optimization techniques \cite{zhou2023large} could:
+\begin{itemize}
+    \item Reduce manual engineering effort
+    \item Discover more robust cross-model prompts
+    \item Adapt prompts dynamically as models evolve
+\end{itemize}
+
+\subsubsection{Hybrid Human-AI Approaches}
+
+Most promising for practical deployment are hybrid approaches combining:
+\begin{itemize}
+    \item LLM-based screening of assessment items
+    \item Human pretesting on filtered subsets
+    \item Synthetic data augmentation validated against authentic samples
+    \item Continuous monitoring of simulation-reality alignment
+\end{itemize}
+
+\subsection{Final Remarks}
+
+This study demonstrates that while LLMs can simulate certain aspects of second language learner behavior with reasonable fidelity, significant gaps remain between simulated and authentic learner language. Task-specialized models show measurable but modest advantages on aligned tasks, with NWP models displaying greater cross-task flexibility.
+
+The most reliable simulations emerge for intermediate proficiency levels on constrained tasks, suggesting that current LLM-based approaches are best suited for augmenting—not replacing—authentic learner data. As models continue to evolve and prompting techniques advance, artificial learners may increasingly serve as valuable tools for educational research and application development, provided their limitations are carefully understood and communicated.
+
+Future progress will depend on developing more heterogeneous simulation approaches, expanding to diverse languages and task types, creating better evaluation benchmarks, and investigating the fairness and ethical implications of synthetic learner data in educational contexts.

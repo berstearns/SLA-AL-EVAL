@@ -1,0 +1,126 @@
+\section{Results}
+
+\subsection{Production Task Performance}
+
+\subsubsection{Proficiency Simulation Patterns}
+
+Figure~\ref{fig:production_monotonicity} shows the accuracy patterns of NWP-specialized models when simulating different proficiency levels on production tasks from EFCAMDAT. All models demonstrate increasing linguistic complexity with higher simulated proficiency levels, though with varying degrees of monotonicity.
+
+\textbf{GPT-3.5} achieved the highest monotonicity score ($M = 0.89$), with nearly linear increases in lexical diversity (MTLD) and syntactic complexity across simulated levels A1-C2. Error rates decreased from 47\% at simulated A1 to 8\% at simulated C2.
+
+\textbf{GPT-4}, consistent with \citet{benedetto2024using}'s findings of "hyper-accuracy," produced text with low error rates even at simulated A1 (22\% error rate), limiting its ability to authentically model beginner-level production. Its monotonicity score was lower ($M = 0.64$).
+
+\textbf{LLaMA-3-8B} showed good proficiency differentiation ($M = 0.81$) with appropriate error patterns, though simulated A1 responses occasionally included vocabulary beyond typical beginner level.
+
+\textbf{Mistral-7B} demonstrated the most variability, with non-monotonic patterns in syntactic complexity measures ($M = 0.58$), particularly struggling to differentiate B1-B2 levels.
+
+\subsubsection{Error Analysis}
+
+Table~\ref{tab:error_types_production} compares error type distributions between simulated and authentic learner responses at each proficiency level.
+
+\textbf{A1-A2 levels:} GPT-3.5 produced reasonable distributions of basic errors (verb tense, subject-verb agreement, articles), though authentic learners showed higher rates of L1 transfer errors that models rarely generated. Jensen-Shannon divergence: $D_{JS} = 0.23$ for GPT-3.5.
+
+\textbf{B1-B2 levels:} Error distributions aligned more closely ($D_{JS} = 0.15$ for GPT-3.5), with models generating appropriate intermediate-level errors like preposition choice and word form errors.
+
+\textbf{C1-C2 levels:} Models struggled to produce authentic advanced-level errors. Authentic C1 learners make subtle collocation and register errors, while models either produced error-free text or made errors too basic for that level.
+
+\subsubsection{Linguistic Complexity Alignment}
+
+Figure~\ref{fig:complexity_production} plots lexical and syntactic complexity measures for simulated vs. authentic responses at each CEFR level.
+
+Simulated responses showed strong correlation with authentic patterns for:
+\begin{itemize}
+    \item Lexical diversity (MTLD): $\rho = 0.82$, $p < 0.001$
+    \item Mean T-unit length: $\rho = 0.76$, $p < 0.001$
+\end{itemize}
+
+However, simulated responses were systematically more coherent and better organized, with higher scores on discourse coherence metrics (Coh-Metrix), suggesting models produce "idealized" learner language rather than capturing authentic performance variability.
+
+\subsection{Fill-in-the-Gap Task Performance}
+
+\subsubsection{MLM-Specialized Models}
+
+Table~\ref{tab:gap_filling_mlm} presents accuracy results for MLM-specialized models on gap-filling exercises.
+
+\textbf{RoBERTa-large} achieved the best proficiency differentiation, with accuracy increasing monotonically from 42\% (simulated A2) to 91\% (simulated C1), yielding $M = 0.92$. Error patterns closely matched authentic learner responses ($D_{JS} = 0.18$).
+
+\textbf{BERT-base} showed similar but slightly less pronounced patterns ($M = 0.85$), with occasional confusion between adjacent proficiency levels (B1/B2).
+
+\textbf{ELECTRA-large} produced very high accuracy even at simulated A2 (67\%), suggesting difficulty modeling lower proficiency levels, similar to GPT-4's hyper-accuracy in production.
+
+\subsubsection{NWP-Specialized Models on Gap-Filling}
+
+NWP models adapted for gap-filling (Table~\ref{tab:gap_filling_nwp}) showed mixed results:
+
+\textbf{GPT-3.5} achieved reasonable proficiency differentiation ($M = 0.76$), though accuracy was generally higher than MLM models at lower simulated levels, indicating difficulty generating appropriately incorrect responses.
+
+\textbf{LLaMA-3-8B} performed comparably ($M = 0.74$), with error distributions somewhat less aligned with authentic learners than MLM models ($D_{JS} = 0.29$ vs. 0.18 for RoBERTa).
+
+Notably, NWP models required explicit prompting to "make characteristic errors" to avoid simply producing correct answers, suggesting their generation capabilities can override proficiency simulation instructions.
+
+\subsection{Cross-Task Generalization}
+
+\subsubsection{MLM Models on Production Tasks}
+
+Adapting MLM models for production through iterative generation proved challenging. Generated texts were:
+\begin{itemize}
+    \item Significantly shorter than authentic learner productions (mean 67 vs. 152 words)
+    \item Less coherent, with abrupt topic shifts
+    \item Syntactically simpler across all proficiency levels
+\end{itemize}
+
+Human evaluators correctly identified MLM-generated texts as simulated in 78\% of cases, compared to 42\% for NWP-generated texts, indicating lower authenticity.
+
+\subsubsection{NWP Models on Gap-Filling}
+
+NWP models performed reasonably on gap-filling despite architectural mismatch, achieving monotonicity scores only 0.08-0.16 points lower than on production tasks. This suggests the task itself (constrained response space) helps guide proficiency-appropriate responses regardless of training objective.
+
+\subsection{Model Architecture and Size Effects}
+
+\subsubsection{Effect of Model Size}
+
+Comparing within model families:
+\begin{itemize}
+    \item Larger models (GPT-4, RoBERTa-large) showed greater hyper-accuracy, struggling to simulate lower proficiency
+    \item Smaller models (GPT-3.5, BERT-base) better captured proficiency range but with less consistent error patterns
+    \item Mid-size models (LLaMA-3-8B, Mistral-7B) offered a balance
+\end{itemize}
+
+\subsubsection{Prompt Variation Effects}
+
+Removing chain-of-thought explanations decreased monotonicity scores by 0.12-0.21 points across models, confirming their importance for proficiency-appropriate simulation.
+
+Adding explicit error examples in prompts improved lower-level simulation but reduced upper-level performance, suggesting a trade-off between capturing beginner errors and advanced proficiency.
+
+\subsection{Human Evaluation Results}
+
+Table~\ref{tab:human_eval} summarizes expert ratings:
+
+\textbf{Authenticity detection:}
+\begin{itemize}
+    \item NWP models (production): 42\% correctly identified as simulated
+    \item MLM models (gap-filling): 35\% correctly identified as simulated
+    \item Cross-task: 68-78\% correctly identified as simulated
+\end{itemize}
+
+\textbf{Proficiency level estimation:} Human raters estimated proficiency levels within one CEFR level for 79\% of simulated responses (compared to 94\% inter-rater agreement on authentic responses).
+
+\textbf{Authenticity ratings (1-5 scale):} Mean ratings were 3.4 for NWP models on production, 3.6 for MLM models on gap-filling, and 2.1-2.4 for cross-task applications.
+
+Expert raters noted common characteristics of simulated responses:
+\begin{itemize}
+    \item "Too well-organized for stated proficiency level"
+    \item "Errors seem stereotypical rather than natural"
+    \item "Vocabulary choices more uniform than typical learners"
+    \item "Advanced levels lack subtle collocation issues"
+\end{itemize}
+
+\subsection{Summary of Findings}
+
+Our results address the research questions:
+
+\textbf{RQ1 (Proficiency simulation):} Yes, generative LLMs can simulate proficiency-specific patterns in both tasks, generalizing reasonably to unseen data. GPT-3.5 and LLaMA-3-8B showed best overall performance. However, simulation quality varied by proficiency level, with lower levels (A1-A2) and advanced levels (C1-C2) proving most challenging.
+
+\textbf{RQ2 (Task-model alignment):} Task-specialized models showed measurable advantages (0.08-0.16 higher monotonicity scores) on aligned tasks, but the effect was smaller than expected. For gap-filling specifically, MLM models produced more authentic error patterns, but NWP models achieved similar accuracy patterns with appropriate prompting.
+
+\textbf{RQ3 (Architecture effects):} Larger models exhibited more hyper-accuracy, limiting lower-proficiency simulation. The best balance came from mid-size models (GPT-3.5, LLaMA-3-8B). MLM models strongly underperformed on production tasks when adapted for generation, while NWP models showed more flexibility across tasks.

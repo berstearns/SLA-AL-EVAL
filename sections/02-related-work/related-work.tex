@@ -1,0 +1,58 @@
+\section{Related Work}
+
+\subsection{LLM-Based Simulation of Human Behavior}
+
+Recent research has explored using LLMs to simulate human participants across various domains. \citet{argyle2023out} demonstrated that LLMs can reproduce political attitudes and demographic correlations in survey responses, while \citet{aher2023using} showed that LLMs exhibit human-like behaviors in social science experiments. However, concerns have been raised about the validity and ethics of replacing human participants with LLM simulations \cite{crockett2023generative}.
+
+Most directly relevant to our work, \citet{benedetto2024using} showed that GPT-3.5 can be prompted to answer multiple-choice exam questions while role-playing as students of different skill levels. Their "reference prompt" successfully produced monotonically increasing accuracy patterns across simulated student levels on science and reading comprehension questions. However, they found that prompts engineered for one model version did not generalize well to other LLMs, and noted that GPT-4 suffered from "hyper-accuracy," making it difficult to simulate lower-performing students.
+
+Our work extends this line of research to the second language learning domain, where learner behavior exhibits structured developmental patterns and task-specific characteristics not present in general knowledge questions.
+
+\subsection{Artificial Learners and Learner Modeling}
+
+Artificial learners—computational models that simulate learner-specific linguistic behaviors—have a growing presence in SLA research. Early work focused on narrow phenomena, such as modeling specific error types \cite{kim2024let}. More recent approaches use LLMs for broader learner simulation \cite{stearns2024evaluating}.
+
+\citet{xia2024second} explored using LLMs to generate synthetic interlanguage data, noting that while LLMs can produce grammatically plausible learner-like text, they sometimes create "stylized averages" rather than capturing authentic variability. \citet{flor2024ai} demonstrated that synthetic learner data can augment training of automated writing evaluation systems, though careful validation against authentic data is essential.
+
+A key advantage of artificial learners lies in their ability to generate proficiency-specific language distributions. For example, an artificial A2 learner should produce vocabulary and structures typical of that level while making characteristic errors. This probabilistic modeling approach provides interpretability while enabling scalable data generation for underrepresented proficiency levels.
+
+However, as \citet{warstadt2020blimp} show with controlled linguistic probes, LLMs exhibit systematic competence gaps. In the SLA context, this raises questions about whether simulated learner language authentically reflects developmental patterns or merely reproduces surface-level stereotypes from training data.
+
+\subsection{Task Types in Language Assessment}
+
+Language assessment distinguishes between different task types that elicit distinct linguistic behaviors:
+
+\textbf{Production tasks} (e.g., essays, open-ended responses) require learners to generate language with minimal constraints, revealing their active vocabulary, syntactic repertoire, and discourse organization capabilities. These tasks align with the Next Word Prediction (NWP) objective used in autoregressive language models like GPT.
+
+\textbf{Fill-in-the-gap exercises} (e.g., cloze tests, discrete-point grammar items) present learners with context and require selecting or generating appropriate lexical or grammatical items for specific positions. These tasks align with Masked Language Modeling (MLM), the training objective of models like BERT.
+
+Previous research has shown that these task types assess partially distinct competencies \cite{yaneva2019systematic}. Production tasks emphasize fluency, complexity, and strategic competence, while gap-filling exercises focus more on accuracy, grammatical knowledge, and form recognition.
+
+\subsection{Pre-training Objectives: NWP vs. MLM}
+
+Modern language models use different pre-training objectives that shape their capabilities:
+
+\textbf{Next Word Prediction (NWP)}: Autoregressive models (GPT family, LLaMA) predict each token given all previous tokens, learning left-to-right sequential dependencies. This objective is well-suited for generation tasks requiring coherent continuation.
+
+\textbf{Masked Language Modeling (MLM)}: Bidirectional models (BERT, RoBERTa) predict masked tokens using both left and right context, learning to understand relationships in both directions. This objective naturally aligns with fill-in-the-gap tasks where surrounding context constrains the target.
+
+While both objective types produce powerful language representations, their architectural differences may influence performance on task-specific learner simulation. Our work systematically investigates whether this alignment manifests in simulation fidelity.
+
+\subsection{CEFR-Based Proficiency Assessment}
+
+The Common European Framework of Reference for Languages (CEFR) defines six proficiency levels from A1 (beginner) to C2 (mastery). Automatic CEFR classification has been approached through feature-based methods \cite{kerz2021automated}, fine-tuned transformers \cite{mayfield2020fine}, and more recently, zero-shot prompting of LLMs \cite{benedetto2025llm}.
+
+A consistent finding is that models struggle with boundary cases (e.g., B1/B2 distinction) and underrepresented levels (A1, C2). Our simulation approach could potentially address data scarcity by generating synthetic examples, but this requires careful validation to ensure generated language reflects authentic developmental patterns rather than model biases.
+
+\subsection{Gap in Current Research}
+
+While prior work has demonstrated LLM-based student simulation for factual knowledge questions and explored synthetic learner data generation, no previous study has:
+
+\begin{itemize}
+    \item Systematically compared LLM simulation across production vs. gap-filling task types
+    \item Investigated whether task-specific training objectives (NWP vs. MLM) lead to differential simulation performance
+    \item Developed and evaluated prompt engineering strategies specifically for second language learner role-playing across proficiency levels
+    \item Analyzed error patterns and linguistic complexity in simulated responses compared to authentic learner data
+\end{itemize}
+
+This paper addresses these gaps through controlled experiments with multiple model architectures and comprehensive evaluation on authentic learner corpora.

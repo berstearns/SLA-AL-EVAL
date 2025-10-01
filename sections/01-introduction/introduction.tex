@@ -1,0 +1,40 @@
+\section{Introduction}
+
+Large Language Models (LLMs) have demonstrated remarkable capabilities in generating human-like text and simulating various cognitive behaviors \cite{openai2023gpt4}. Recent research has explored using LLMs to simulate human participants in surveys \cite{argyle2023out} and, more recently, to model students' responses to exam questions \cite{benedetto2024using}. However, the application of LLMs to simulating second language learners—whose linguistic production exhibits systematic developmental patterns, proficiency-specific errors, and task-dependent behaviors—remains largely unexplored.
+
+This paper investigates whether generative LLMs can authentically simulate second language learners' responses across two fundamental task types that characterize language assessment: \textbf{production tasks} (open-ended writing) and \textbf{fill-in-the-gap exercises} (constrained completion tasks). These task types align naturally with two dominant pre-training objectives in language modeling: Next Word Prediction (NWP) for production and Masked Language Modeling (MLM) for gap-filling. This alignment raises a central question: \textit{do LLMs specialized for specific training objectives exhibit superior performance on corresponding simulation tasks?}
+
+\subsection{Motivation}
+
+The ability to simulate learner behavior at different proficiency levels has significant practical applications in educational technology:
+
+\begin{itemize}
+    \item \textbf{Virtual pretesting}: Simulated learner responses could reduce the cost and time required to pretest assessment items, particularly for low-resource proficiency levels (A1, C2) where authentic learner data is scarce.
+    \item \textbf{Adaptive learning systems}: Accurate learner models enable more realistic simulations for developing and testing adaptive algorithms before deployment with real students.
+    \item \textbf{Synthetic data generation}: Augmenting limited authentic learner corpora with high-fidelity synthetic data could improve training of assessment and feedback systems.
+    \item \textbf{Error pattern analysis}: Understanding systematic differences in how models simulate various proficiency levels provides insights into both learner development and model capabilities.
+\end{itemize}
+
+\subsection{Research Questions}
+
+Building on recent work showing that LLMs can be prompted to simulate students of different skill levels \cite{benedetto2024using}, we extend this investigation to the second language acquisition domain with the following research questions:
+
+\textbf{RQ1:} Can generative LLMs be prompted to simulate second language learners of different CEFR proficiency levels (A1-C2) in both production and fill-in-the-gap tasks, and does this behavior generalize to unseen data?
+
+\textbf{RQ2:} Do task-specialized models (NWP-trained for production, MLM-trained for gap-filling) demonstrate superior simulation fidelity on their corresponding task types compared to cross-task application?
+
+\textbf{RQ3:} How do simulation quality and error patterns compare across different model architectures and sizes when role-playing learners at various proficiency levels?
+
+\subsection{Contributions}
+
+Our main contributions are:
+
+\begin{itemize}
+    \item A systematic evaluation framework for assessing LLM-based learner simulation across two fundamental task types with distinct linguistic and cognitive demands
+    \item Prompt engineering strategies adapted from student simulation research \cite{benedetto2024using} and tailored to second language learner contexts, enabling proficiency-specific role-playing
+    \item Comparative analysis of NWP-specialized versus MLM-specialized models on production and gap-filling tasks, revealing the impact of training objectives on simulation capabilities
+    \item Empirical findings on three learner corpora demonstrating that while LLMs can simulate proficiency-specific patterns, the degree of task-model alignment shows measurable but limited effects
+    \item Analysis of error type distributions and linguistic complexity patterns in simulated responses, providing insights into where LLM simulations diverge from authentic learner behavior
+\end{itemize}
+
+The remainder of this paper is organized as follows: Section 2 reviews related work on LLM-based simulation, artificial learners, and second language assessment. Section 3 describes our methodology, including prompt engineering, datasets, and evaluation metrics. Section 4 presents results comparing model performance across tasks and proficiency levels. Section 5 discusses implications and limitations, and Section 6 concludes with future directions.

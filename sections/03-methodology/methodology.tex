@@ -1,0 +1,176 @@
+\section{Methodology}
+
+We conduct our investigation in three phases: (i) prompt engineering to develop effective learner simulation prompts for both task types, (ii) systematic evaluation of task-specialized models on corresponding and cross-task scenarios, and (iii) comparative analysis of simulated vs. authentic learner responses.
+
+\subsection{Prompt Engineering}
+
+Following the methodology of \citet{benedetto2024using}, we develop task-specific prompts that instruct LLMs to role-play as second language learners at different CEFR levels. We consider two distinct prompt templates:
+
+\subsubsection{Production Task Prompt}
+
+For open-ended production tasks (aligned with NWP), we adapt the reference prompt structure:
+
+\begin{quote}
+\textit{You will be shown a writing prompt for an English language learner. Learners at this level range from A1 (absolute beginner) to C2 (near-native proficiency) according to the CEFR scale. You must respond to the prompt as a learner at level \{X\} would respond.}
+
+\textit{Provide a JSON file with: \{"proficiency\_level": "the simulated CEFR level", "response\_explanation": "the thinking process and typical errors a \{X\} learner would make", "response\_text": "the actual response a \{X\} learner would produce"\}}
+
+\textbf{Prompt:} "\{writing\_prompt\}"
+\end{quote}
+
+\subsubsection{Fill-in-the-Gap Task Prompt}
+
+For gap-filling exercises (aligned with MLM), we develop a parallel prompt:
+
+\begin{quote}
+\textit{You will be shown a fill-in-the-gap exercise for an English language learner. The exercise has one or more blanks marked with \_\_\_. Learners are at different CEFR levels from A1 (beginner) to C2 (advanced). You must fill in the gap(s) as a learner at level \{X\} would.}
+
+\textit{Provide a JSON file with: \{"proficiency\_level": "the simulated CEFR level", "answer\_explanation": "the reasoning and misconceptions a \{X\} learner would have", "gap\_fills": ["list of words/phrases to fill each gap"]\}}
+
+\textbf{Exercise:} "\{text\_with\_gaps\}"
+\end{quote}
+
+We engineer these prompts on a development set (described below) using temperature=0 to reduce output variance. The prompts explicitly request chain-of-thought explanations to encourage the model to consider proficiency-specific patterns.
+
+\subsection{Models}
+
+We evaluate models representing both major pre-training paradigms:
+
+\textbf{NWP-Specialized Models (Autoregressive):}
+\begin{itemize}
+    \item GPT-3.5-turbo (gpt-3.5-turbo-0613)
+    \item GPT-4 (gpt-4-1106-preview)
+    \item LLaMA-3-8B
+    \item Mistral-7B
+\end{itemize}
+
+\textbf{MLM-Specialized Models (Bidirectional):}
+\begin{itemize}
+    \item BERT-base (adapted for generation via constrained decoding)
+    \item RoBERTa-large
+    \item ELECTRA-large
+\end{itemize}
+
+Note that MLM models require adaptation for production tasks since they are not designed for open-ended generation. We employ two approaches: (1) iterative masked prediction for production tasks, and (2) native gap-filling for MLM-aligned tasks.
+
+\subsection{Datasets}
+
+We use three established learner corpora covering different L1 backgrounds, proficiency levels, and task types:
+
+\subsubsection{EFCAMDAT Corpus}
+
+The EF Cambridge Open Language Database \cite{geertzen2013automatic, shatz2020refining} contains 723,282 learner writings from A1-C2 levels. We use:
+\begin{itemize}
+    \item \textbf{Dev set}: 1,000 randomly sampled texts (200 per CEFR level) for prompt engineering
+    \item \textbf{Evaluation set}: 500 held-out texts (100 per level) for production task evaluation
+\end{itemize}
+
+\subsubsection{Cambridge Learner Corpus Fill-in-the-Gap Subset}
+
+We compile 300 fill-in-the-gap exercises from Cambridge English exams with authentic learner responses:
+\begin{itemize}
+    \item 60 exercises per CEFR level (A2-C1)
+    \item Each exercise includes 3-5 gaps with authentic learner responses from multiple proficiency levels
+    \item \textbf{Dev set}: 100 exercises for prompt engineering
+    \item \textbf{Test set}: 200 exercises for evaluation
+\end{itemize}
+
+\subsubsection{TOEFL11 Corpus}
+
+The TOEFL11 corpus \cite{blanchard2013toefl11} provides 12,100 essays from 11 L1 backgrounds at intermediate-to-advanced proficiency. We use a 500-essay subset stratified by L1 and prompt type for cross-corpus validation.
+
+\subsection{Experimental Design}
+
+We conduct three main experiments:
+
+\subsubsection{Experiment 1: Within-Task Performance}
+
+We evaluate each model on its aligned task type:
+\begin{itemize}
+    \item NWP models on production tasks (EFCAMDAT, TOEFL11)
+    \item MLM models on fill-in-the-gap tasks (Cambridge subset)
+\end{itemize}
+
+For each simulated proficiency level (A1-C2), we generate responses and compare against authentic learner responses at the same level.
+
+\subsubsection{Experiment 2: Cross-Task Generalization}
+
+We evaluate models on non-aligned tasks:
+\begin{itemize}
+    \item NWP models on fill-in-the-gap exercises
+    \item MLM models on production tasks (using iterative generation)
+\end{itemize}
+
+This tests whether training objective specialization limits cross-task performance.
+
+\subsubsection{Experiment 3: Model Comparison}
+
+We compare performance across:
+\begin{itemize}
+    \item Model architectures (GPT vs. LLaMA vs. BERT)
+    \item Model sizes (7B vs. 8B vs. large)
+    \item Prompt variations (with/without chain-of-thought)
+\end{itemize}
+
+\subsection{Evaluation Metrics}
+
+We assess simulation fidelity using multiple complementary metrics:
+
+\subsubsection{Response Pattern Metrics}
+
+\textbf{Proficiency monotonicity:} Following \citet{benedetto2024using}, we compute a monotonicity score $M$ that combines correlation with ideal accuracy patterns and penalizes non-monotonic behavior:
+
+\[M = \rho(A_{sim}, A_{ideal}) - P_{non-mono}\]
+
+where $\rho$ is Pearson correlation, $A_{sim}$ is simulated accuracy across levels, $A_{ideal}$ is the ideal monotonically increasing pattern, and $P_{non-mono}$ penalizes decreases between adjacent levels.
+
+\textbf{Accuracy alignment:} For gap-filling tasks with known correct answers, we compute:
+\begin{itemize}
+    \item Absolute accuracy per simulated level
+    \item Correlation between simulated and authentic learner accuracy
+    \item Within-one-level accuracy tolerance
+\end{itemize}
+
+\subsubsection{Error Analysis Metrics}
+
+We automatically annotate errors in both simulated and authentic responses using rule-based and neural error detection tools \cite{bryant2023grammatical}, then compare:
+
+\textbf{Error type distribution:} Jensen-Shannon divergence between simulated and authentic error type distributions at each proficiency level.
+
+\textbf{Error frequency:} Correlation between error rates in simulated vs. authentic responses.
+
+\textbf{Proficiency-specific errors:} Presence of characteristic errors (e.g., article errors at A2, advanced errors like inversion at C1).
+
+\subsubsection{Linguistic Complexity Metrics}
+
+Following SLA research traditions \cite{housen2012complexity}, we compute:
+
+\begin{itemize}
+    \item \textbf{Lexical diversity}: Type-token ratio, MTLD
+    \item \textbf{Syntactic complexity}: Mean length of T-unit, subordination ratio
+    \item \textbf{Accuracy}: Error-free T-unit ratio
+\end{itemize}
+
+We test whether simulated responses show expected proficiency-level patterns in these measures.
+
+\subsubsection{Human Evaluation}
+
+For a random sample of 100 responses (20 per proficiency level), two expert raters:
+\begin{itemize}
+    \item Judge whether each response is authentic or simulated (binary classification)
+    \item Estimate the proficiency level (A1-C2)
+    \item Rate authenticity on a 5-point scale
+\end{itemize}
+
+Inter-rater agreement is computed using Cohen's kappa.
+
+\subsection{Statistical Analysis}
+
+We assess statistical significance using:
+\begin{itemize}
+    \item Bootstrap resampling (10,000 iterations) for comparing metric distributions
+    \item Permutation tests for correlation coefficients
+    \item Bonferroni correction for multiple comparisons across proficiency levels
+\end{itemize}
+
+All experiments use temperature=0 for deterministic outputs during main evaluation, with temperature=0.7 for a robustness check examining output variability.
