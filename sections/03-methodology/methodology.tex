@@ -116,6 +116,22 @@ We compare performance across:
 
 We assess simulation fidelity using multiple complementary metrics:
 
+\subsubsection{Perplexity-Based Metrics}
+
+\textbf{Perplexity} serves as a fundamental metric for evaluating both NWP and MLM models across task types. For each simulated response, we compute:
+
+\textbf{For NWP models:} Autoregressive perplexity computed as:
+\[PPL_{NWP} = \exp\left(-\frac{1}{N}\sum_{i=1}^{N} \log P(w_i | w_{<i})\right)\]
+
+where $N$ is sequence length and $P(w_i | w_{<i})$ is the probability of token $w_i$ given previous tokens.
+
+\textbf{For MLM models:} Pseudo-perplexity computed by masking each token and averaging:
+\[PPL_{MLM} = \exp\left(-\frac{1}{N}\sum_{i=1}^{N} \log P(w_i | w_{\setminus i})\right)\]
+
+where $P(w_i | w_{\setminus i})$ is the probability of token $w_i$ given all other tokens.
+
+We hypothesize that perplexity patterns should correlate with proficiency level: higher proficiency simulations should produce lower perplexity scores when evaluated by models trained on native/proficient text, while showing characteristic perplexity patterns when evaluated by proficiency-specific models.
+
 \subsubsection{Response Pattern Metrics}
 
 \textbf{Proficiency monotonicity:} Following \citet{benedetto2024using}, we compute a monotonicity score $M$ that combines correlation with ideal accuracy patterns and penalizes non-monotonic behavior:
@@ -130,6 +146,16 @@ where $\rho$ is Pearson correlation, $A_{sim}$ is simulated accuracy across leve
     \item Correlation between simulated and authentic learner accuracy
     \item Within-one-level accuracy tolerance
 \end{itemize}
+
+\textbf{MLM-specific accuracy analysis:} For MLM models on gap-filling tasks, we additionally compute:
+\begin{itemize}
+    \item \textbf{Top-1 accuracy}: Proportion of gaps where the highest-probability token matches the authentic learner response or acceptable alternative
+    \item \textbf{Top-5 accuracy}: Proportion where correct answer appears in top 5 predictions
+    \item \textbf{Probability distribution analysis}: KL divergence between predicted token probabilities and empirical distributions from authentic learners
+    \item \textbf{Confidence calibration}: Alignment between model confidence (probability mass on predicted token) and actual correctness
+\end{itemize}
+
+This extended accuracy analysis for MLM models leverages their native capability to produce probability distributions over vocabulary for masked positions, providing richer evaluation than possible with autoregressive models.
 
 \subsubsection{Error Analysis Metrics}
 
